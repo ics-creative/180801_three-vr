@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "start": "browser-sync start --server --files *"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "browser-sync": "^2.24.6"
+  },
+  "license": "ISC",
+  "private": true
+}

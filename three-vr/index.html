@@ -1,0 +1,114 @@
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <script src="js/three.js"></script>
+  <!--　WebVRの判定、遷移ボタンのスクリプト　-->
+  <script src="js/WebVR.js"></script>
+  <!--　WebVRのポリフィル　-->
+  <script src="js/webvr-polyfill.js"></script>
+  <script>
+      // ページの読み込みを待つ
+      window.addEventListener('load', init);
+
+      function init() {
+          // ポリフィルを使用
+          const polyfill = new WebVRPolyfill();
+
+          // サイズを指定
+          const width = 960;
+          const height = 540;
+
+          // レンダラーを作成
+          const renderer = new THREE.WebGLRenderer({
+              canvas: document.querySelector('#myCanvas'),
+              antialias:true
+          });
+          renderer.setSize(width, height);
+          
+          // レンダラーのWebVR設定を有効にする
+          renderer.vr.enabled = true;
+
+          const container = document.getElementById('container');
+          container.style.position = "relative";
+          container.style.width = width;
+          container.style.height = height;
+
+          // WebVRの開始ボタンをDOMに追加
+          container.appendChild(WEBVR.createButton(renderer));
+
+          // シーンを作成
+          const scene = new THREE.Scene();
+
+          // カメラを作成
+          const camera = new THREE.PerspectiveCamera(90, width / height);
+
+          // 球体を作成
+          createSphere();
+          
+          function createSphere() {
+              // 球体の形状を作成します
+              const geometry = new THREE.SphereGeometry(100, 10, 10);
+              for (let i = 0; i < 10; i++) {
+                  // マテリアルを作成
+                  const material = new THREE.MeshBasicMaterial({
+                      color: Math.floor(0x1000000 * Math.random()),
+                      wireframe: true
+                  });
+
+                  // 形状とマテリアルからメッシュを作成します
+                  const mesh = new THREE.Mesh(geometry, material);
+                  // シーンにメッシュを追加します
+                  scene.add(mesh);
+
+                  // メッシュのサイズと位置をランダムに設定します
+                  const r = 50 + Math.random() * 500;
+                  const t = Math.random() * 2 * Math.PI;
+                  mesh.position.x = r * Math.cos(t);
+                  mesh.position.z = r * Math.sin(t);
+                  mesh.position.y = 100 * (Math.random() - 0.5);
+                  const meshScale = 0.3 + Math.random() * 0.3;
+                  mesh.scale.set(meshScale, meshScale, meshScale);
+              }
+          }
+          
+          // 星屑を作成
+          createStarField();
+
+          function createStarField() {
+              // 形状データを作成
+              const geometry = new THREE.Geometry();
+              for (let i = 0; i < 1000; i++) {
+                  geometry.vertices.push(new THREE.Vector3(
+                      3000 * (Math.random() - 0.5),
+                      3000 * (Math.random() - 0.5),
+                      3000 * (Math.random() - 0.5),
+                  ));
+              }
+              // マテリアルを作成
+              const material = new THREE.PointsMaterial({
+                  size: 10,
+                  color: 0xFFFFFF
+              });
+
+              // 物体を作成
+              const mesh = new THREE.Points(geometry, material);
+              scene.add(mesh);
+          }
+
+          // レンダラーにループ関数を登録
+          renderer.setAnimationLoop(tick);
+          
+          // 毎フレーム時に実行されるループイベント
+          function tick() {
+              // レンダリング
+              renderer.render(scene, camera);
+          }
+      }
+  </script>
+</head>
+<body>
+<div id="container">
+  <canvas id="myCanvas"></canvas>
+</div>
+</body>
+</html>
