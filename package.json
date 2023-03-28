@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "start": "browser-sync start  --server three-vr",
+    "format": "prettier --write three-vr/index.html"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.29.1",
+    "prettier": "^2.8.7"
+  },
+  "license": "MIT",
+  "private": true
+}
