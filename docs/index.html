@@ -13,8 +13,8 @@
     <script type="importmap">
       {
         "imports": {
-          "three": "https://unpkg.com/three@0.150.1/build/three.module.js",
-          "three/addons/": "https://unpkg.com/three@0.150.1/examples/jsm/",
+          "three": "https://unpkg.com/three@0.175.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.175.0/examples/jsm/",
           "webxr-polyfill": "https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/build/webxr-polyfill.module.js"
         }
       }
@@ -66,17 +66,17 @@
       // 光源を作成
       {
         const spotLight = new THREE.SpotLight(
-          0xffffff,
-          4,
-          2000,
-          Math.PI / 5,
-          0.2,
-          1.5
+          0xffffff, // 色
+          60000, // ライトの強さ
+          2000, // ライトの最大範囲
+          Math.PI / 5, // 光分散の最大角度
+          0.2, // penumbra
+          1.5 // decay
         );
         spotLight.position.set(500, 300, 500);
         scene.add(spotLight);
 
-        const ambientLight = new THREE.AmbientLight(0x333333);
+        const ambientLight = new THREE.AmbientLight(0x333333, Math.PI);
         scene.add(ambientLight);
       }
       // 地面を作成
