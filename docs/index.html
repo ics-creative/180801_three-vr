@@ -82,7 +82,10 @@
       // 地面を作成
       {
         // 床のテクスチャー
-        const texture = new THREE.TextureLoader().load("imgs/floor.png");
+        const texture = new THREE.TextureLoader().load("imgs/floor.png", (tex) => {
+          tex.colorSpace = THREE.SRGBColorSpace;
+        });
+
         texture.wrapS = texture.wrapT = THREE.RepeatWrapping; // リピート可能に
         texture.repeat.set(10, 10); // 10x10マスに設定
         texture.magFilter = THREE.NearestFilter;
