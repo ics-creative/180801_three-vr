@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <meta charset="utf-8" />
@@ -71,7 +71,7 @@
           2000, // ライトの最大範囲
           Math.PI / 5, // 光分散の最大角度
           0.2, // penumbra
-          1.5 // decay
+          1.5, // decay
         );
         spotLight.position.set(500, 300, 500);
         scene.add(spotLight);
@@ -92,7 +92,7 @@
             map: texture,
             roughness: 0.0,
             metalness: 0.6,
-          })
+          }),
         );
         floor.rotation.x = -Math.PI / 2;
         scene.add(floor);
